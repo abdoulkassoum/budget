@@ -1,0 +1,47 @@
+.enter{
+  display: flex;
+ flex-direction: column;
+ border: 2px solid green;
+ padding: 1em;
+}
+button{
+    width: 90px;
+    margin-top:10% ;
+}
+.enterer{
+    display: flex;
+    flex-direction: column;
+    border: 2px solid rgb(128, 0, 0);
+    padding: 1em;
+}
+#btn{
+    width: 120px;
+ 
+}
+#budget{
+    color: green;
+  font-weight: bold;
+  font-size: xx-large;
+}
+#expenses{
+    color: red;
+    font-weight: bold;
+  font-size: xx-large;
+}
+#balance{
+    color: black;
+    font-weight: bold;
+  font-size: xx-large;
+}
+#Expense_Title{
+    color: red;
+    font-weight: bold;
+  font-size: xx-large;
+}
+#Expense_Value{
+    font-weight: bold;
+  font-size: xx-large;
+}
+i {
+  cursor: pointer;
+}

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <title>budget</title>
+</head>
+
+<body>
+    <div class="container">
+        <p>budget</p>
+        <div class="row">
+            <div class="col 6">
+                <div class="enter">
+
+                    <label for="name">please enter your budget</label>
+                    <input type="number" id="budget_init">
+                    <br>
+                    <button onclick="add_budget()">calculer</button>
+
+
+
+
+                </div>
+                <br><br>
+                <div class="enterer">
+
+                    <label for="name">please enter your expense</label>
+                    <input type="text" id="titre">
+                    <br>
+                    <label for="name">please enter your amount</label>
+                    <input type="number" id="budget_amount">
+                    <br>
+                    <button onclick="add_expense()" id="btn">add expense</button>
+
+
+                </div>
+            </div>
+            <div class="col 6">
+
+                <div class="row">
+                    <div class="col 4">
+                        <h1>BUDGET</h1>
+                        <i class="fa-solid fa-money-bill fa-4x"></i>
+                        <p><span id="budget"> </span>FCFA</p>
+                    </div>
+                    <div class="col 4">
+                        <h1>EXPENSES</h1>
+                        <i class="fa-solid fa-credit-card fa-4x"></i>
+                        <p><span id="expenses">  </span>FCFA</p>
+                    </div>
+                    <div class="col 4">
+                        <h1>balance</h1>
+                        <i class="fa-solid fa-dollar-sign fa-4x"></i>
+                        <p> <span id="balance"> </span>FCFA</p>
+                    </div>
+                </div>
+                <br><br>
+                <div class="row">
+                    <div class="col">
+                        <h4>Expense Title</h4>
+                        <p id="Expense_Title"></p>
+
+                    </div>
+                    <div class="col">
+                        <h4> Expense Value</h4>
+                        <p id="Expense_Value"></p>
+                    </div>
+                    <div class="col">
+
+                    </div>
+                </div>
+                <div class="row" id="bottom">
+                     
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+
+        //recuperation des valeurs
+        let budget_init = document.getElementById("budget_init");
+        let expense_titre = document.getElementById("titre");
+        let expense_amount = document.getElementById("budget_amount");
+        let budget_total = document.getElementById("budget");
+        let baLance = document.getElementById("balance");
+        let expenses_init = document.getElementById("expenses");
+        // print
+        let ExpenseTitle = document.getElementById("Expense_Title");
+        let ExpenseValue = document.getElementById("Expense_Value");
+        let bottom = document.getElementById("bottom");
+
+        let expense_Table = [];
+
+        function calculer(){
+            let expense_total = 0;
+           
+            expense_Table.forEach((expense) =>{
+                expense_total += expense.amount ;
+            })
+
+            expenses_init.textContent = expense_total;
+            baLance.textContent = parseInt(budget_total.textContent) - expense_total;
+        }
+
+        function add_budget(){
+            budget_total.textContent = budget_init.value;
+            baLance.textContent = budget_init.value;
+            budget_init.value = null
+ 
+        }
+
+        function add_expense(){
+            let expense = {
+                titre : expense_titre.value,
+                amount : expense_amount.valueAsNumber,
+            }
+            expense_Table.push(expense);
+            expense_titre.value = null;
+            expense_amount.value = null;
+            display_expense();
+            calculer()
+        }
+        function display_expense(){  
+            bottom.innerHTML = ``;
+            expense_Table.forEach((expense) =>{
+                bottom.innerHTML +=`
+                <div class="row">
+                         <div class="col">${expense.titre }</div>
+                         <div class="col">${expense.amount}</div>
+                         <div class="col">
+                             <div class="row">
+                                 <div class="col" style="color: blue;">
+                                    <i class="fa-solid fa-pen-to-square" onClick = "modifExpense(${expense_Table.indexOf(expense)})"></i>
+                                 </div>
+                                 <div class="col" style="color: red;"><i onClick = "delete_expense(${expense_Table.indexOf(expense)})" class="fa-solid fa-trash" ></i></div>
+                             </div>
+                         </div>
+                </div>
+                
+                `
+            } ) 
+
+        }
+
+        function delete_expense(index) {
+            expense_Table.splice(index, 1);
+            display_expense();
+            calculer();
+        }
+
+
+
+        function modifExpense(index){
+            console.log(expense_Table[index]);
+            expense_titre.value =  expense_Table[index].titre;
+            expense_amount.valueAsNumber = expense_Table[index].amount;
+
+            //expense_Table.splice(index, 1);
+            display_expense();
+            calculer()
+        }
+    
+      
+
+
+
+
+
+    </script>
+</body>
+
+</html>
